@@ -1,12 +1,12 @@
 package com.jaanavi.bookstore.orders.web.exception;
 
+import com.jaanavi.bookstore.orders.domain.InvalidOrderException;
 import com.jaanavi.bookstore.orders.domain.OrderNotFoundException;
+import io.github.resilience4j.core.lang.Nullable;
 import java.net.URI;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.github.resilience4j.core.lang.Nullable;
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,20 +47,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problemDetail;
     }
 
-//    @ExceptionHandler(InvalidOrderException.class)
-//    ProblemDetail handleInvalidOrderException(InvalidOrderException e) {
-//        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
-//        problemDetail.setTitle("Invalid Order Creation Request");
-//        problemDetail.setType(BAD_REQUEST_TYPE);
-//        problemDetail.setProperty("service", SERVICE_NAME);
-//        problemDetail.setProperty("error_category", "Generic");
-//        problemDetail.setProperty("timestamp", Instant.now());
-//        return problemDetail;
-//    }
+    @ExceptionHandler(InvalidOrderException.class)
+    ProblemDetail handleInvalidOrderException(InvalidOrderException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+        problemDetail.setTitle("Invalid Order Creation Request");
+        problemDetail.setType(BAD_REQUEST_TYPE);
+        problemDetail.setProperty("service", SERVICE_NAME);
+        problemDetail.setProperty("error_category", "Generic");
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
 
     @Override
-    @Nullable
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+    @Nullable protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         List<String> errors = new ArrayList<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {

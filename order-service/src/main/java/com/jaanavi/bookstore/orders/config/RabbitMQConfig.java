@@ -6,7 +6,6 @@ import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,9 +30,7 @@ public class RabbitMQConfig {
 
     @Bean
     Binding newOrdersQueueBinding() {
-        return BindingBuilder.bind(newOrdersQueue())
-                .to(exchange())
-                .with(properties.newOrdersQueue()); //is routing key
+        return BindingBuilder.bind(newOrdersQueue()).to(exchange()).with(properties.newOrdersQueue()); // is routing key
     }
 
     @Bean
@@ -63,12 +60,10 @@ public class RabbitMQConfig {
 
     @Bean
     Binding errorOrdersQueueBinding() {
-        return BindingBuilder.bind(errorOrdersQueue())
-                .to(exchange())
-                .with(properties.errorOrdersQueue());
+        return BindingBuilder.bind(errorOrdersQueue()).to(exchange()).with(properties.errorOrdersQueue());
     }
 
-    //creating rabbit template for sending messages
+    // creating rabbit template for sending messages
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, ObjectMapper objectMapper) {
         final var rabbitTemplate = new RabbitTemplate(connectionFactory);
@@ -76,7 +71,7 @@ public class RabbitMQConfig {
         return rabbitTemplate;
     }
 
-//    converting meaasge in terms of json to pass to queues
+    //    converting meaasge in terms of json to pass to queues
     @Bean
     public Jackson2JsonMessageConverter jacksonConverter(ObjectMapper mapper) {
         return new Jackson2JsonMessageConverter(mapper);

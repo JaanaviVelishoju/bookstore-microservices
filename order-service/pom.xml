@@ -28,7 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2025.0.0</spring-cloud.version>
+		<shedlock.version>6.9.2</shedlock.version>
 		<spotless-maven-plugin.version>2.46.1</spotless-maven-plugin.version>
 		<dockerImageName>jaanavi16/bookstore-${project.artifactId}</dockerImageName>
 	</properties>
@@ -61,10 +61,7 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-database-postgresql</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
-		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -137,18 +134,43 @@
 			<version>4.5.0</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-spring-boot3</artifactId>
+			<version>2.2.0</version>
+
+		</dependency>
+
+		<dependency>
+			<groupId>org.wiremock</groupId>
+			<artifactId>wiremock-standalone</artifactId>
+			<version>3.5.2</version>
+			<scope>test</scope>
+
+		</dependency>
+
+<!--		to start wiremock server in container-->
+		<dependency>
+			<groupId>org.wiremock.integrations.testcontainers</groupId>
+			<artifactId>wiremock-testcontainers-module</artifactId>
+			<version>1.0-alpha-13</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.javacrumbs.shedlock</groupId>
+			<artifactId>shedlock-spring</artifactId>
+			<version>${shedlock.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.javacrumbs.shedlock</groupId>
+			<artifactId>shedlock-provider-jdbc-template</artifactId>
+			<version>${shedlock.version}</version>
+		</dependency>
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+
 
 	<build>
 		<plugins>

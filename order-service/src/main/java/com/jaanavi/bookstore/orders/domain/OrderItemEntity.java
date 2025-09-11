@@ -1,14 +1,12 @@
 package com.jaanavi.bookstore.orders.domain;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 
-
-//no public is package protected,i.e their are not accessed outside of package
+// no public is package protected,i.e their are not accessed outside of package
 @Entity
 @Table(name = "order_items")
- class OrderItemEntity {
+class OrderItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_item_id_generator")
@@ -28,7 +26,7 @@ import java.math.BigDecimal;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "order_id")
-    private OrderEntity order; //parent entity
+    private OrderEntity order; // parent entity
 
     public Long getId() {
         return id;

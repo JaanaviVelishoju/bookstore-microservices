@@ -1,18 +1,19 @@
 package com.jaanavi.bookstore.orders.testdata;
+
 import static org.instancio.Select.field;
 
-
+import com.jaanavi.bookstore.orders.domain.models.Address;
+import com.jaanavi.bookstore.orders.domain.models.CreateOrderRequest;
+import com.jaanavi.bookstore.orders.domain.models.Customer;
+import com.jaanavi.bookstore.orders.domain.models.OrderItem;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
-
-import com.jaanavi.bookstore.orders.domain.models.CreateOrderRequest;
-import com.jaanavi.bookstore.orders.domain.models.OrderItem;
-import com.jaanavi.bookstore.orders.domain.models.Customer;
-import com.jaanavi.bookstore.orders.domain.models.Address;
 import org.instancio.Instancio;
 
 public class TestDataFactory {
+
+    // static means no redeclaring and final means no reassigning
     static final List<String> VALID_COUNTIES = List.of("India", "Germany");
     static final Set<OrderItem> VALID_ORDER_ITEMS =
             Set.of(new OrderItem("P100", "Product 1", new BigDecimal("25.50"), 1));

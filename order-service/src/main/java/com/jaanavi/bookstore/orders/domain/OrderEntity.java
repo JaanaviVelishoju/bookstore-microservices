@@ -4,48 +4,48 @@ import com.jaanavi.bookstore.orders.domain.models.Address;
 import com.jaanavi.bookstore.orders.domain.models.Customer;
 import com.jaanavi.bookstore.orders.domain.models.OrderStatus;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table(name ="orders")
- class OrderEntity {
+@Table(name = "orders")
+class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_id_generator")
-    @SequenceGenerator(name= "order_id_generator" , sequenceName = "order_id_seq")
+    @SequenceGenerator(name = "order_id_generator", sequenceName = "order_id_seq")
     private Long id;
 
     @Column(nullable = false)
     private String orderNumber;
 
-    @Column(name="username" ,nullable = false)
+    @Column(name = "username", nullable = false)
     private String userName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private Set<OrderItemEntity> items;
 
     @Embedded
-    @AttributeOverrides(value={
-            @AttributeOverride(name ="name" ,column = @Column(name ="customer_name")),
-            @AttributeOverride(name = "email", column = @Column(name = "customer_email")),
-            @AttributeOverride(name = "phone", column = @Column(name = "customer_phone"))
-    })
-    private Customer customer;
-
-    //instend of using single property using it as below,for mapping name value into that column value
-    @Embedded //from hibernate 6.2
     @AttributeOverrides(
             value = {
-                    @AttributeOverride(name = "addressLine1", column = @Column(name = "delivery_address_line1")),
-                    @AttributeOverride(name = "addressLine2", column = @Column(name = "delivery_address_line2")),
-                    @AttributeOverride(name = "city", column = @Column(name = "delivery_address_city")),
-                    @AttributeOverride(name = "state", column = @Column(name = "delivery_address_state")),
-                    @AttributeOverride(name = "zipCode", column = @Column(name = "delivery_address_zip_code")),
-                    @AttributeOverride(name = "country", column = @Column(name = "delivery_address_country")),
+                @AttributeOverride(name = "name", column = @Column(name = "customer_name")),
+                @AttributeOverride(name = "email", column = @Column(name = "customer_email")),
+                @AttributeOverride(name = "phone", column = @Column(name = "customer_phone"))
             })
-    private Address deliveryAddress; //we can also have billing address
+    private Customer customer;
+
+    // instend of using single property using it as below,for mapping name value into that column value
+    @Embedded // from hibernate 6.2
+    @AttributeOverrides(
+            value = {
+                @AttributeOverride(name = "addressLine1", column = @Column(name = "delivery_address_line1")),
+                @AttributeOverride(name = "addressLine2", column = @Column(name = "delivery_address_line2")),
+                @AttributeOverride(name = "city", column = @Column(name = "delivery_address_city")),
+                @AttributeOverride(name = "state", column = @Column(name = "delivery_address_state")),
+                @AttributeOverride(name = "zipCode", column = @Column(name = "delivery_address_zip_code")),
+                @AttributeOverride(name = "country", column = @Column(name = "delivery_address_country")),
+            })
+    private Address deliveryAddress; // we can also have billing address
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
@@ -53,7 +53,7 @@ import java.util.Set;
     private String comments;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime  createdAt =LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
     private LocalDateTime updateAt;
