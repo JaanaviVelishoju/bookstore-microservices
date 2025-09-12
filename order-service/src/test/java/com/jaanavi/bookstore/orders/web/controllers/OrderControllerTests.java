@@ -22,7 +22,7 @@ import org.springframework.test.context.jdbc.Sql;
 // local port setup.
 
 @Sql(
-        scripts = "classpath:test-orders.sql",
+        scripts = "/test-orders.sql",
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD) // as sample data or else checks class path
 class OrderControllerTests extends AbstractIT {
 
@@ -89,7 +89,6 @@ class OrderControllerTests extends AbstractIT {
         @Test
         void shouldGetOrdersSuccessfully() {
             List<OrderSummary> orderSummaries = given().when()
-                    // .header("Authorization", "Bearer " + getToken())
                     .get("/api/orders")
                     .then()
                     .log()
@@ -111,7 +110,6 @@ class OrderControllerTests extends AbstractIT {
         @Test
         void shouldGetOrderSuccessfully() {
             given().when()
-                    //  .header("Authorization", "Bearer " + getToken())
                     .get("/api/orders/{orderNumber}", orderNumber)
                     .then()
                     .statusCode(200)
